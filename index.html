@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="theme-color" content="#0a0d12" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M6 22l6-8 5 5 9-12' stroke='%23f5c451' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>棱镜 · 智能交易终端</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="app">
+  <!-- 顶部状态条（自定义） -->
+  <header class="topbar" id="topbar">
+    <div class="tb-left" id="tbLeft">
+      <span class="brand">棱镜</span><span class="brand-sub">PRISM</span>
+    </div>
+    <div class="tb-right">
+      <span class="mkt-dot" id="mktDot"></span><span class="mkt-txt" id="mktTxt">--</span>
+      <button class="icon-btn" id="btnRefresh" title="刷新">⟳</button>
+    </div>
+  </header>
+
+  <!-- 页面容器 -->
+  <main id="views">
+    <section class="view active" id="v-watch"></section>
+    <section class="view" id="v-market"></section>
+    <section class="view" id="v-trade"></section>
+    <section class="view" id="v-news"></section>
+    <section class="view" id="v-me"></section>
+    <section class="view" id="v-detail"></section>
+  </main>
+
+  <!-- 底部导航 -->
+  <nav class="tabbar" id="tabbar">
+    <button class="tab active" data-tab="watch">
+      <svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 6-8"/><path d="M3 21h18"/></svg>
+      <span>自选</span>
+    </button>
+    <button class="tab" data-tab="market">
+      <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      <span>行情</span>
+    </button>
+    <button class="tab tab-trade" data-tab="trade">
+      <span class="trade-circle">交易</span>
+    </button>
+    <button class="tab" data-tab="news">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+      <span>资讯</span>
+    </button>
+    <button class="tab" data-tab="me">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg>
+      <span>我的</span>
+    </button>
+  </nav>
+
+  <!-- 全局浮层 -->
+  <div class="sheet-mask" id="sheetMask"></div>
+  <div class="sheet" id="sheet"></div>
+  <div class="toast" id="toast"></div>
+  <div class="search-overlay" id="searchOverlay"></div>
+</div>
+<script src="js/api.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
