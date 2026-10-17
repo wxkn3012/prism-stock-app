@@ -1,0 +1,12 @@
+{
+  "name": "prism-stock-app",
+  "version": "1.1.0",
+  "description": "棱镜 PRISM — A股行情模拟交易 APP（含战绩分享后端）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js 8823"
+  },
+  "dependencies": {},
+  "engines": { "node": ">=18" }
+}
