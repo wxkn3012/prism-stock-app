@@ -1,0 +1,15 @@
+# Render 部署配置（可选，在 Render 上也可纯网页操作）
+services:
+  - type: web
+    name: prism-stock-app
+    runtime: node
+    plan: free
+    buildCommand: "echo no-build-needed"
+    startCommand: "node server.js"
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+    disk:
+      name: prism-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
