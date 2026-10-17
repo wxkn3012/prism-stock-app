@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0d12" />
+<meta name="robots" content="noindex" />
+<title>战绩 · 棱镜 PRISM</title>
+<style>
+:root {
+  --bg: #080a0e; --card: #12161c; --card2: #171c23;
+  --line: rgba(255,255,255,.065); --line2: rgba(255,255,255,.11);
+  --txt: #e8ecf2; --txt2: #9aa3b2; --txt3: #5c6472;
+  --up: #ff4d4f; --down: #22c55e; --gold: #f5c451; --accent: #4d8dff;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: radial-gradient(120% 55% at 50% 0%, #111927 0%, var(--bg) 60%);
+  color: var(--txt); font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px; -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+}
+.wrap { max-width: 560px; margin: 0 auto; padding: 22px 16px 40px; }
+.num { font-variant-numeric: tabular-nums; }
+.up { color: var(--up); } .down { color: var(--down); } .flat { color: var(--txt2); }
+
+.head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.brand { font-size: 15px; font-weight: 800; letter-spacing: 2px; }
+.brand span { font-size: 9px; color: var(--txt3); letter-spacing: 2px; margin-left: 6px; vertical-align: 3px; }
+.ro-badge {
+  font-size: 10px; padding: 4px 9px; border-radius: 20px;
+  background: rgba(77,141,255,.13); color: #8fbaff; border: 1px solid rgba(77,141,255,.25);
+}
+
+.hero {
+  border-radius: 18px; padding: 20px; position: relative; overflow: hidden;
+  background: linear-gradient(160deg, #1b2431, #11161d);
+  border: 1px solid var(--line);
+}
+.hero::after {
+  content: 'PRISM'; position: absolute; right: -8px; bottom: -16px;
+  font-size: 64px; font-weight: 900; color: rgba(255,255,255,.025); letter-spacing: 6px;
+}
+.who { display: flex; align-items: center; gap: 11px; }
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%; flex: 0 0 auto;
+  background: linear-gradient(135deg, #f5c451, #8b6b1f);
+  display: grid; place-items: center; font-size: 17px; font-weight: 800; color: #14100a;
+}
+.who b { font-size: 16.5px; font-weight: 700; display: block; }
+.who i { font-style: normal; font-size: 11px; color: var(--txt3); }
+.strategy {
+  display: inline-block; font-size: 11px; color: var(--gold);
+  background: rgba(245,196,81,.1); border: 1px solid rgba(245,196,81,.2);
+  padding: 3px 9px; border-radius: 6px; margin-top: 12px;
+}
+.metric { margin-top: 16px; }
+.metric .lbl { font-size: 11px; color: var(--txt2); letter-spacing: .4px; }
+.metric .big { font-size: 38px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin: 5px 0 7px; }
+.metric .sub { font-size: 13px; font-weight: 600; }
+.split {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--line); border-radius: 12px; overflow: hidden; margin-top: 16px;
+}
+.split div { background: #0f141a; padding: 11px 10px; }
+.split i { display: block; font-style: normal; font-size: 10px; color: var(--txt3); margin-bottom: 4px; }
+.split b { font-size: 13.5px; font-weight: 700; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 15px; margin-top: 14px; }
+.card h3 { margin: 0 0 12px; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
+.card h3 span { font-size: 10.5px; color: var(--txt3); font-weight: 400; }
+canvas { width: 100%; display: block; }
+
+.pos { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 8px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.pos:last-child { border-bottom: 0; padding-bottom: 0; }
+.pos .nm b { font-size: 13.5px; font-weight: 600; display: block; }
+.pos .nm i { font-style: normal; font-size: 10px; color: var(--txt3); }
+.pos .rl { text-align: right; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.pos .rl em { font-style: normal; display: block; font-size: 10px; color: var(--txt3); margin-top: 2px; }
+
+.trade { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.trade:last-child { border-bottom: 0; }
+.trade .l b { font-size: 13px; font-weight: 600; }
+.trade .l i { font-style: normal; font-size: 10px; color: var(--txt3); display: block; margin-top: 3px; }
+.badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-right: 6px; font-weight: 700; }
+.badge.b { background: rgba(255,77,79,.15); color: var(--up); }
+.badge.s { background: rgba(34,197,94,.15); color: var(--down); }
+.trade .r { text-align: right; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.trade .r i { font-style: normal; display: block; font-size: 10px; color: var(--txt3); margin-top: 2px; }
+
+.empty { text-align: center; color: var(--txt3); font-size: 12.5px; padding: 20px 0; }
+.foot { text-align: center; font-size: 10.5px; color: var(--txt3); margin-top: 22px; line-height: 2; }
+.foot a { color: var(--txt2); text-decoration: none; }
+.err { text-align: center; padding: 80px 20px; }
+.err b { display: block; font-size: 17px; margin-bottom: 8px; }
+.err p { color: var(--txt3); font-size: 12.5px; line-height: 1.8; margin: 0; }
+.loading { display: grid; place-items: center; height: 60vh; color: var(--txt3); font-size: 13px; }
+.spin {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.1); border-top-color: var(--gold);
+  animation: sp .8s linear infinite; margin-bottom: 14px;
+}
+@keyframes sp { to { transform: rotate(360deg); } }
+@media (min-width: 640px) { body { font-size: 14px; } .wrap { padding-top: 40px; } }
+</style>
+</head>
+<body>
+<div id="app"><div class="loading"><div class="spin"></div>正在加载战绩…</div></div>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const cls = (v) => (v > 0 ? 'up' : v < 0 ? 'down' : 'flat');
+const sgn = (v, d = 2) => (v > 0 ? '+' : '') + Number(v).toFixed(d);
+
+function fmt(n, d = 2) {
+  if (!Number.isFinite(+n)) return '--';
+  return (+n).toLocaleString('zh-CN', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+function fmtBig(n) {
+  n = +n;
+  if (!Number.isFinite(n)) return '--';
+  if (Math.abs(n) >= 1e8) return (n / 1e8).toFixed(2) + '亿';
+  if (Math.abs(n) >= 1e4) return (n / 1e4).toFixed(2) + '万';
+  return n.toFixed(0);
+}
+function timeAgo(ts) {
+  const d = (Date.now() - ts) / 1000;
+  if (!ts) return '未知';
+  if (d < 60) return '刚刚更新';
+  if (d < 3600) return Math.floor(d / 60) + ' 分钟前更新';
+  if (d < 86400) return Math.floor(d / 3600) + ' 小时前更新';
+  return Math.floor(d / 86400) + ' 天前更新';
+}
+
+function shareId() {
+  const m = location.pathname.match(/\/s\/([A-Za-z0-9_-]+)/);
+  if (m) return m[1];
+  return new URLSearchParams(location.search).get('id') || '';
+}
+
+function drawCurve(cv, curve, initial) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = cv.clientWidth, h = 110;
+  cv.width = w * dpr; cv.height = h * dpr;
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  const pts = curve.length >= 2 ? curve.map((c) => c.v) : [initial, initial];
+  let lo = Math.min(...pts), hi = Math.max(...pts);
+  if (hi === lo) { hi = lo * 1.001; lo = lo * 0.999; }
+  const pad = (hi - lo) * 0.15;
+  lo -= pad; hi += pad;
+  const X = (i) => (i / (pts.length - 1)) * (w - 2) + 1;
+  const Y = (v) => h - ((v - lo) / (hi - lo)) * (h - 8) - 4;
+  const up = pts[pts.length - 1] >= initial;
+  const col = up ? '#ff4d4f' : '#22c55e';
+
+  // 基准线（初始资金）
+  if (initial >= lo && initial <= hi) {
+    ctx.beginPath(); ctx.setLineDash([3, 3]); ctx.strokeStyle = 'rgba(255,255,255,.18)';
+    ctx.moveTo(0, Y(initial)); ctx.lineTo(w, Y(initial)); ctx.stroke(); ctx.setLineDash([]);
+  }
+  const g = ctx.createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, up ? 'rgba(255,77,79,.28)' : 'rgba(34,197,94,.28)');
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.beginPath();
+  pts.forEach((v, i) => (i ? ctx.lineTo(X(i), Y(v)) : ctx.moveTo(X(i), Y(v))));
+  ctx.lineTo(X(pts.length - 1), h); ctx.lineTo(X(0), h); ctx.closePath();
+  ctx.fillStyle = g; ctx.fill();
+  ctx.beginPath();
+  pts.forEach((v, i) => (i ? ctx.lineTo(X(i), Y(v)) : ctx.moveTo(X(i), Y(v))));
+  ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.lineJoin = 'round'; ctx.stroke();
+}
+
+function render(d, views) {
+  const up = d.totalPnl >= 0;
+  const positions = d.positions || [];
+  const trades = d.trades || [];
+  const st = d.stats || {};
+
+  document.title = `${d.name} 的战绩 · 棱镜`;
+
+  $('#app').innerHTML = `
+  <div class="wrap">
+    <div class="head">
+      <div class="brand">棱镜<span>PRISM</span></div>
+      <div class="ro-badge">只读战绩</div>
+    </div>
+
+    <div class="hero">
+      <div class="who">
+        <div class="avatar">${esc((d.name || '匿')[0])}</div>
+        <div>
+          <b>${esc(d.name)}</b>
+          <i>${timeAgo(d.updatedAt)} · 浏览 ${views || 0} 次</i>
+        </div>
+      </div>
+      ${d.strategy ? `<div class="strategy">${esc(d.strategy)}</div>` : ''}
+      <div class="metric">
+        <div class="lbl">累计收益率</div>
+        <div class="big num ${cls(d.totalPnlPct)}">${sgn(d.totalPnlPct)}%</div>
+        <div class="sub num ${cls(d.totalPnl)}">${up ? '+' : ''}¥${fmt(d.totalPnl)}</div>
+      </div>
+      <div class="split">
+        <div><i>总资产</i><b class="num">${fmt(d.total, 0)}</b></div>
+        <div><i>持仓市值</i><b class="num">${fmt(d.marketValue, 0)}</b></div>
+        <div><i>可用资金</i><b class="num">${fmt(d.cash, 0)}</b></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>收益曲线 <span>初始 ¥${fmtBig(d.initial)}</span></h3>
+      <canvas id="curve"></canvas>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txt3);margin-top:6px">
+        <span>起始</span><span>${d.curve && d.curve.length > 1 ? '至今' : '数据积累中'}</span>
+      </div>
+    </div>
+
+    <div class="split" style="margin-top:14px">
+      <div><i>交易笔数</i><b class="num">${st.trades || trades.length}</b></div>
+      <div><i>卖出胜率</i><b class="num">${st.winRate == null ? '--' : st.winRate.toFixed(0) + '%'}</b></div>
+      <div><i>仓位</i><b class="num">${(st.positionRate || 0).toFixed(0)}%</b></div>
+    </div>
+
+    <div class="card">
+      <h3>当前持仓 <span>${positions.length} 只</span></h3>
+      ${positions.length ? positions.map((p) => `
+        <div class="pos">
+          <div class="nm"><b>${esc(p.name)}</b><i>${esc(String(p.code || '').slice(2))}</i></div>
+          <div class="rl"><span class="${cls(p.pnl)}">${p.pnl >= 0 ? '+' : ''}${fmt(p.pnl, 0)}</span><em>浮动盈亏</em></div>
+          <div class="rl"><span class="${cls(p.pnlPct)}">${sgn(p.pnlPct)}%</span><em>${p.qty} 股</em></div>
+        </div>`).join('') : '<div class="empty">当前空仓</div>'}
+    </div>
+
+    <div class="card">
+      <h3>最近交易 <span>最新在前</span></h3>
+      ${trades.length ? trades.slice(0, 15).map((t) => `
+        <div class="trade">
+          <div class="l">
+            <b><span class="badge ${t.side === 'buy' ? 'b' : 's'}">${t.side === 'buy' ? '买' : '卖'}</span>${esc(t.name)}</b>
+            <i>${esc(t.time)}</i>
+          </div>
+          <div class="r">
+            <span>${t.qty} 股 @ ${fmt(t.price)}</span>
+            <i>${t.pnl != null ? `<span class="${cls(t.pnl)}">${t.pnl >= 0 ? '+' : ''}${fmt(t.pnl)}</span>` : '¥' + fmt(t.amount, 0)}</i>
+          </div>
+        </div>`).join('') : '<div class="empty">还没有交易记录</div>'}
+    </div>
+
+    <div class="foot">
+      这是「棱镜 PRISM」生成的只读战绩分享页<br/>
+      所有交易均为模拟，不构成任何投资建议
+    </div>
+  </div>`;
+
+  requestAnimationFrame(() => {
+    const cv = $('#curve');
+    if (cv) drawCurve(cv, d.curve || [], d.initial);
+  });
+}
+
+async function main() {
+  const id = shareId();
+  if (!id) return fail('链接不完整', '请向分享者索取完整的分享链接');
+  try {
+    const res = await fetch('/api/share/' + encodeURIComponent(id), { cache: 'no-store' });
+    const j = await res.json();
+    if (!j.ok) return fail('战绩不存在或已停止分享', '分享者可能已关闭这个链接');
+    render(j.data, j.views);
+  } catch (e) {
+    fail('加载失败', '请稍后刷新重试');
+  }
+}
+
+function fail(title, desc) {
+  $('#app').innerHTML = `<div class="wrap"><div class="err"><b>${esc(title)}</b><p>${esc(desc)}</p></div></div>`;
+}
+
+main();
+
+// 每 30 秒自动拉取最新战绩
+setInterval(async () => {
+  const id = shareId();
+  if (!id) return;
+  try {
+    const res = await fetch('/api/share/' + encodeURIComponent(id), { cache: 'no-store' });
+    const j = await res.json();
+    if (j.ok) render(j.data, j.views);
+  } catch (e) {}
+}, 30000);
+</script>
+</body>
+</html>
